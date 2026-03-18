@@ -1,0 +1,35 @@
+---
+layout: page
+---
+
+<button id="copy-link" style="display: none;"></button>
+
+<article class="px-1" data-toc="true">
+  <div class="content">
+    {{ content }}
+  </div>
+</article>
+
+<script src="https://cdn.jsdelivr.net/npm/tocbot@4.32.2/dist/tocbot.min.js"></script>
+
+<script type="text/javascript">
+/*<![CDATA[*/
+document.addEventListener("DOMContentLoaded", function() {
+  var sidebar = document.querySelector("#panel-wrapper .access");
+  if (sidebar && !document.getElementById("toc-wrapper")) {
+    sidebar.insertAdjacentHTML("afterend", "<section id=\"toc-wrapper\" class=\"d-none\"><h2 class=\"panel-heading ps-3 pt-2 mb-2\">Contents</h2><nav id=\"toc\"></nav></section>");
+  }
+  if (typeof tocbot !== "undefined" && document.getElementById("toc-wrapper")) {
+    tocbot.init({
+      tocSelector: "#toc",
+      contentSelector: ".content",
+      ignoreSelector: "[data-toc-skip]",
+      headingSelector: "h2, h3, h4",
+      orderedList: false,
+      scrollSmooth: false
+    });
+    document.getElementById("toc-wrapper").classList.remove("d-none");
+  }
+});
+/*]]>*/
+</script>

@@ -1,0 +1,49 @@
+---
+layout: none
+---
+[
+  {% assign first_item = true %}
+
+  {% for post in site.posts %}
+    {% unless first_item %},{% endunless %}
+    {
+      "title": {{ post.title | jsonify }},
+      "url": {{ post.url | relative_url | jsonify }},
+      "categories": {{ post.categories | join: ', ' | jsonify }},
+      "tags": {{ post.tags | join: ', ' | jsonify }},
+      "date": "{{ post.date | date: '%Y-%m-%d %H:%M:%S' }}",
+      "snippet": {{ post.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }},
+      "content": {{ post.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }}
+    }
+    {% assign first_item = false %}
+  {% endfor %}
+
+  {% assign custom_pages = site.pages | where: "layout", "content_page" %}
+  {% for page in custom_pages %}
+    {% unless first_item %},{% endunless %}
+    {
+      "title": {{ page.title | jsonify }},
+      "url": {{ page.url | relative_url | jsonify }},
+      "categories": "",
+      "tags": "",
+      "date": "{{ page.last_modified_at | default: site.time | date: '%Y-%m-%d %H:%M:%S' }}",
+      "snippet": {{ page.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }},
+      "content": {{ page.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }}
+    }
+    {% assign first_item = false %}
+  {% endfor %}
+
+  {% assign index_page = site.pages | where: "url", "/" | first %}
+  {% if index_page %}
+    {% unless first_item %},{% endunless %}
+    {
+      "title": {{ index_page.title | default: site.title | default: "Home" | jsonify }},
+      "url": {{ index_page.url | relative_url | jsonify }},
+      "categories": "",
+      "tags": "",
+      "date": "{{ index_page.last_modified_at | default: site.time | date: '%Y-%m-%d %H:%M:%S' }}",
+      "snippet": {{ index_page.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }},
+      "content": {{ index_page.content | strip_html | normalize_whitespace | truncate: 200 | jsonify }}
+    }
+  {% endif %}
+]

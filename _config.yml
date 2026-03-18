@@ -1,0 +1,33 @@
+title: Pio 1 26
+tagline: Built with Decap CMS
+description: A minimal, responsive and feature-rich Jekyll theme for technical writing.
+baseurl: ''
+url: https://pio-1-26.aure2.ch
+author: Region AZUR
+social:
+  name: Region AZUR
+  links:
+    - https://region-azur.ch
+theme: jekyll-theme-chirpy
+lang: en
+timezone: Europe/Zurich
+pwa:
+  enabled: true
+  cache:
+    deny_paths: []
+include:
+  - _tabs
+  - content
+  - _plugins
+defaults:
+  - scope:
+      path: content
+    values:
+      layout: content_page
+      toc: true
+      panel_includes:
+        - toc
+      permalink: /:basename
+collections:
+  tabs:
+    output: true
